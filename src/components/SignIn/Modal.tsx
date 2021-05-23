@@ -10,12 +10,12 @@ import {
 } from '@material-ui/core';
 import { Close as CloseIcon } from '@material-ui/icons';
 
-interface ModalProps {
+type ModalProps = {
   title: string;
   children: React.ReactNode;
   visible?: boolean;
   onClose: () => void;
-}
+};
 
 const useStyles = makeStyles((theme) => ({
   dialogActions: {

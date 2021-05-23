@@ -6,7 +6,7 @@ import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 
 import { FormControl, FormGroup, TextField } from '@material-ui/core';
-import ModalUI from '../components/UI/Modal';
+import ModalUI from '../components/SignIn/Modal';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -70,8 +70,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-type PropsType = {};
-export const SignIn: React.FC<PropsType> = (props) => {
+// type PropsType = {};
+export const SignIn: React.FC = (props) => {
   const classes = useStyles();
 
   const [visibleModal, setVisibleModal] = React.useState<'signIn' | 'signUp'>();
@@ -114,7 +114,7 @@ export const SignIn: React.FC<PropsType> = (props) => {
             <b>Присоединяйтесь к Твиттеру прямо сейчас!</b>
           </Typography>
           <Button
-            onClick={signInOpen}
+            onClick={signUpOpen}
             style={{ marginBottom: 20 }}
             variant="contained"
             color="primary"
