@@ -197,10 +197,13 @@ export const useStyles = makeStyles((theme: Theme) =>
     tweetsUserName: {
       color: grey[500],
     },
+    msgNameBtnWrapper: {
+      width: 450,
+    },
     tweetsGroupBtn: {
       marginTop: '7px ',
       marginLeft: '-10px',
-      width: 450,
+      width: '100%',
       display: 'flex',
       justifyContent: 'space-between',
     },
@@ -244,11 +247,11 @@ export const Home: React.FC<PropsType> = (props) => {
     <Container className={classes.wrapper} maxWidth="lg">
       <Grid container spacing={2}>
         {/* side bar */}
-        <Grid item xs={3}>
+        <Grid item lg={3} xs={1}>
           <SideBar classes={classes} />
         </Grid>
         {/* tweets */}
-        <Grid item xs={6}>
+        <Grid item xs={7} lg={6}>
           <Paper className={classes.tweetsWrppaer} variant="outlined">
             <Paper className={classes.tweetsHeader} variant="outlined">
               <Typography variant="h6">Главная</Typography>
@@ -302,58 +305,10 @@ export const Home: React.FC<PropsType> = (props) => {
                   'https://sun7-7.userapi.com/impg/c855520/v855520088/1cef49/IAgC3bnT_1A.jpg?size=50x0&quality=96&crop=55,55,284,284&sign=26d83f468cea1be127f2283953e2fb3b&ava=1',
               }}
             />
-            <Tweet
-              text={'Hello everyone'}
-              classes={classes}
-              user={{
-                fullname: 'Old Fag',
-                username: 'Renat',
-                avatarUrl:
-                  'https://sun7-9.userapi.com/s/v1/ig1/jxtQ-cqQZz62XNS8mSlvyUaVKtvZ7Ul4kzcWc0fBArvBIKmn3etioggIKq21FtaD6Ubujmuk.jpg?size=50x0&quality=96&crop=168,6,432,432&ava=1',
-              }}
-            />
-            <Tweet
-              text={'Hello everyone'}
-              classes={classes}
-              user={{
-                fullname: 'Glafira Magt',
-                username: 'GlafiraMAGT',
-                avatarUrl: 'GlafiraMAGT',
-              }}
-            />
-            <Tweet
-              text={'Hello everyone'}
-              classes={classes}
-              user={{
-                fullname: 'Glafira Magt',
-                username: 'GlafiraMAGT',
-                avatarUrl:
-                  'https://sun7-7.userapi.com/impg/c855520/v855520088/1cef49/IAgC3bnT_1A.jpg?size=50x0&quality=96&crop=55,55,284,284&sign=26d83f468cea1be127f2283953e2fb3b&ava=1',
-              }}
-            />
-            <Tweet
-              text={'Hello everyone'}
-              classes={classes}
-              user={{
-                fullname: 'Old Fag',
-                username: 'Renat',
-                avatarUrl:
-                  'https://sun7-9.userapi.com/s/v1/ig1/jxtQ-cqQZz62XNS8mSlvyUaVKtvZ7Ul4kzcWc0fBArvBIKmn3etioggIKq21FtaD6Ubujmuk.jpg?size=50x0&quality=96&crop=168,6,432,432&ava=1',
-              }}
-            />
-            <Tweet
-              text={'Hello everyone'}
-              classes={classes}
-              user={{
-                fullname: 'Glafira Magt',
-                username: 'GlafiraMAGT',
-                avatarUrl: 'GlafiraMAGT',
-              }}
-            />
           </Paper>
         </Grid>
         {/* right side bar */}
-        <Grid item xs={3}>
+        <Grid item xs={4} lg={3}>
           <div className={classes.rightNavBar}>
             <SearchTextField
               variant="outlined"

@@ -19,13 +19,13 @@ type PropsType = {
 export const Tweet: React.FC<PropsType> = ({ classes, user, text }) => {
   return (
     <div>
-      <Paper className={classNames(classes.tweet, classes.tweet)} variant="outlined">
+      <Paper className={classes.tweet} variant="outlined">
         <Avatar
           className={classes.tweetAvatar}
           alt={`Аватарка пользователя ${user.username}`}
           src={user.avatarUrl}
         />
-        <div>
+        <div className={classes.msgNameBtnWrapper}>
           <div>
             <Typography>
               <b>{user.fullname}</b>{' '}
