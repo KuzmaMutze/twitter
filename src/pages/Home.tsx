@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -7,12 +7,9 @@ import { grey } from '@material-ui/core/colors';
 import {
   Container,
   InputAdornment,
-  TextareaAutosize,
-  CircularProgress,
   Typography,
   withStyles,
   Avatar,
-  Button,
   IconButton,
   TextField,
   List,
@@ -21,11 +18,20 @@ import {
   ListItemText,
   Divider,
 } from '@material-ui/core';
+import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import { Tweet } from '../components/Home/Tweet';
 import { SideBar } from '../components/Home/SideBar';
-import CropOriginalOutlinedIcon from '@material-ui/icons/CropOriginalOutlined';
-import SentimentSatisfiedOutlinedIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
-import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
+import { WriteTweetForm } from '../components/Home/WriteTweetForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { actions } from '../redux/reducers/tweetsReducer';
+import {
+  selectIsLoading,
+  selectIsTweetsIsLoaded,
+  selectIsTweetsIsLoading,
+  selectTweets,
+} from '../redux/selectors/tweets-selector';
 
 const SearchTextField = withStyles((theme) =>
   createStyles({
@@ -109,21 +115,16 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     // textArea
     writeTweet: {
-      height: '110px',
-      borderTop: 'none',
-      borderLeft: 'none',
-      borderRight: 'none',
-      border: '13px solid #ECECEF',
+      height: '100%',
+      border: 'none',
       borderRadius: 0,
       display: 'flex',
-      padding: '20px 15px 15px',
+      // padding: '20px 15px 15px',
     },
     textAreaWrapper: {
       width: '100%',
-      height: '50%',
+      height: '100%',
       '& textarea': {
-        width: '99.5%!important',
-        height: '100%!important',
         fontSize: 22,
         border: 'none',
         resize: 'none',
@@ -132,6 +133,9 @@ export const useStyles = makeStyles((theme: Theme) =>
         '& :placeholder': {
           color: grey[500],
         },
+      },
+      '& textarea:first-child': {
+        width: '100%!important',
       },
     },
     writeTweetTextArea: {
@@ -232,17 +236,29 @@ export const useStyles = makeStyles((theme: Theme) =>
         color: grey[400],
       },
     },
+    borderunderAddTweetForm: {
+      margin: 0,
+      backgroundColor: '#ECECEF',
+      border: 'none',
+      height: 13,
+    },
+    loadingTweetsCenter: {
+      marginTop: 150,
+      textAlign: 'center',
+    },
   }),
 );
-
-// TODO:
-// 1. сделать форму отправки твита
-// 2. Сделать правую часть твитера
-// 3.
 
 type PropsType = {};
 export const Home: React.FC<PropsType> = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const tweets = useSelector(selectTweets);
+  const isLoading = useSelector(selectIsTweetsIsLoading);
+
+  useEffect(() => {
+    dispatch(actions.setFetchTweetsAC());
+  }, []);
   return (
     <Container className={classes.wrapper} maxWidth="lg">
       <Grid container spacing={2}>
@@ -256,55 +272,19 @@ export const Home: React.FC<PropsType> = (props) => {
             <Paper className={classes.tweetsHeader} variant="outlined">
               <Typography variant="h6">Главная</Typography>
             </Paper>
-            <Paper className={classes.writeTweet} variant="outlined">
-              <Avatar
-                className={classes.tweetAvatar}
-                alt="Ваш аватар"
-                src={`https://sun9-48.userapi.com/impg/3LXTx8zqXFNlg5Fz02tVhP1ykCYDPfF9ITj6sw/L2YxVSVONJY.jpg?size=1280x960&quality=96&sign=7634b299dd308712ff600a4bf2ad7271&type=album`}
-              />
-              <div className={classes.textAreaWrapper}>
-                <TextareaAutosize
-                  placeholder="Что происходит?"
-                  className={classes.writeTweetTextArea}
-                />
-                <div className={classes.textAreaFooter}>
-                  <div className={classes.writeTweetIcons}>
-                    <IconButton>
-                      <CropOriginalOutlinedIcon color="primary" />
-                    </IconButton>
-                    <IconButton>
-                      <SentimentSatisfiedOutlinedIcon color="primary" />
-                    </IconButton>
-                  </div>
-                  <div className={classes.writeTweetBtn}>
-                    <Typography>280</Typography>
-                    <div className={classes.circularProgress}>
-                      <CircularProgress variant="static" size={20} value={20} color="primary" />
-                      <CircularProgress
-                        variant="static"
-                        size={20}
-                        thickness={4}
-                        value={100}
-                        style={{ color: 'rgba(0,0,0,0.1)' }}
-                      />
-                    </div>
-                    <Button color="primary" variant="contained">
-                      Твитнуть
-                    </Button>
-                  </div>
-                </div>
+            <div style={{ padding: '20px 15px 15px' }}>
+              <WriteTweetForm classes={classes} />
+            </div>
+            <hr className={classes.borderunderAddTweetForm} />
+            {!isLoading ? (
+              tweets.map((tweet) => (
+                <Tweet key={tweet._id} text={tweet.text} classes={classes} user={tweet.user} />
+              ))
+            ) : (
+              <div className={classes.loadingTweetsCenter}>
+                <CircularProgress />
               </div>
-            </Paper>
-            <Tweet
-              text={'Hello everyone'}
-              classes={classes}
-              user={{
-                fullname: 'Glafira Magt',
-                username: 'GlafiraMAGT',
-                avatarUrl:
-                  'https://sun7-7.userapi.com/impg/c855520/v855520088/1cef49/IAgC3bnT_1A.jpg?size=50x0&quality=96&crop=55,55,284,284&sign=26d83f468cea1be127f2283953e2fb3b&ava=1',
-              }}
-            />
+            )}
           </Paper>
         </Grid>
         {/* right side bar */}

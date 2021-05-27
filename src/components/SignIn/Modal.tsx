@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  makeStyles,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  IconButton,
-} from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, IconButton } from '@material-ui/core';
 import { Close as CloseIcon } from '@material-ui/icons';
 
 type ModalProps = {
@@ -17,20 +9,18 @@ type ModalProps = {
   onClose: () => void;
 };
 
-const useStyles = makeStyles((theme) => ({
-  dialogActions: {
-    padding: theme.spacing(3),
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   dialogActions: {
+//     padding: theme.spacing(3),
+//   },
+// }));
 
-export const ModalUI: React.FC<ModalProps> = ({
+export const ModalBlock: React.FC<ModalProps> = ({
   title,
   children,
   visible = false,
   onClose,
 }: ModalProps): React.ReactElement | null => {
-  const classes = useStyles();
-
   if (!visible) return null;
 
   return (
@@ -43,7 +33,7 @@ export const ModalUI: React.FC<ModalProps> = ({
       </DialogTitle>
 
       <DialogContent>{children}</DialogContent>
-
+      {/* 
       <DialogActions className={classes.dialogActions}>
         <Button onClick={onClose} color="primary">
           Cancel
@@ -51,9 +41,9 @@ export const ModalUI: React.FC<ModalProps> = ({
         <Button onClick={onClose} color="primary" variant="contained">
           Sign in
         </Button>
-      </DialogActions>
+      </DialogActions> */}
     </Dialog>
   );
 };
 
-export default ModalUI;
+export default ModalBlock;

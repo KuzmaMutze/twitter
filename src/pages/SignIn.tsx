@@ -1,4 +1,4 @@
-import { Button, makeStyles, Typography } from '@material-ui/core';
+import { Button, DialogActions, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import SearchIcon from '@material-ui/icons/Search';
@@ -6,7 +6,7 @@ import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 
 import { FormControl, FormGroup, TextField } from '@material-ui/core';
-import ModalUI from '../components/SignIn/Modal';
+import { ModalBlock } from '../components/SignIn/Modal';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -91,6 +91,9 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  dialogActions: {
+    padding: theme.spacing(3),
+  },
 }));
 
 // type PropsType = {};
@@ -150,7 +153,7 @@ export const SignIn: React.FC = (props) => {
             </Button>
           </div>
         </div>
-        <ModalUI
+        <ModalBlock
           title="Войти в Twitter"
           visible={visibleModal === 'signIn'}
           onClose={handleCloseModal}>
@@ -176,9 +179,17 @@ export const SignIn: React.FC = (props) => {
                 fullWidth
               />
             </FormGroup>
+            <DialogActions className={classes.dialogActions}>
+              <Button onClick={handleCloseModal} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={handleCloseModal} color="primary" variant="contained">
+                Sign in
+              </Button>
+            </DialogActions>
           </FormControl>
-        </ModalUI>
-        <ModalUI
+        </ModalBlock>
+        <ModalBlock
           title="Создайте учетуню записать"
           visible={visibleModal === 'signUp'}
           onClose={handleCloseModal}>
@@ -214,8 +225,16 @@ export const SignIn: React.FC = (props) => {
                 fullWidth
               />
             </FormGroup>
+            <DialogActions className={classes.dialogActions}>
+              <Button onClick={handleCloseModal} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={handleCloseModal} color="primary" variant="contained">
+                Sign in
+              </Button>
+            </DialogActions>
           </FormControl>
-        </ModalUI>
+        </ModalBlock>
       </div>
       <footer className={classes.footer}>
         <ul>
