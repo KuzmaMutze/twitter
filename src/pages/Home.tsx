@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../redux/reducers/tweetsReducer';
 import { selectIsTweetsIsLoading, selectTweets } from '../redux/selectors/tweets-selector';
 import { RightSideBar } from '../components/RightSideBar/RightSideBar';
+import { Route } from 'react-router';
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -173,6 +174,10 @@ export const useStyles = makeStyles((theme: Theme) =>
       marginTop: '20px',
       borderRadius: 10,
       backgroundColor: '#F6F7FA',
+      '& a': {
+        color: 'inherit',
+        textDecoration: 'none',
+      },
     },
     title: {
       fontWeight: 800,
@@ -226,15 +231,17 @@ export const Home: React.FC<PropsType> = (props) => {
               <WriteTweetForm classes={classes} />
             </div>
             <hr className={classes.borderunderAddTweetForm} />
-            {!isLoading ? (
-              tweets.map((tweet) => (
-                <Tweet key={tweet._id} text={tweet.text} classes={classes} user={tweet.user} />
-              ))
-            ) : (
-              <div className={classes.loadingTweetsCenter}>
-                <CircularProgress />
-              </div>
-            )}
+            <Route path="/home" exact>
+              {!isLoading ? (
+                tweets.map((tweet) => (
+                  <Tweet key={tweet._id} text={tweet.text} classes={classes} user={tweet.user} />
+                ))
+              ) : (
+                <div className={classes.loadingTweetsCenter}>
+                  <CircularProgress />
+                </div>
+              )}
+            </Route>
           </Paper>
         </Grid>
         {/* right side bar */}

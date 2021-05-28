@@ -4,11 +4,11 @@ import ListItemText from '@material-ui/core/ListItemText/ListItemText';
 import Typography from '@material-ui/core/Typography/Typography';
 import React from 'react';
 import { useStyles } from '../../pages/Home';
-import { tags } from '../../types';
+import { TagType } from '../../types';
 
 type PropsType = {
   classes: ReturnType<typeof useStyles>;
-  tag: tags;
+  tag: TagType;
 };
 export const Tag: React.FC<PropsType> = ({ classes, tag }) => {
   return (

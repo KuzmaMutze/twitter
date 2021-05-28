@@ -1,6 +1,6 @@
   
 import axios from "axios";
-import { tags, Tweets } from "../types";
+import { TagType, Tweets } from "../types";
 import { data } from "./objHealper";
 
 // export type ResponseType<D = {}, RC = ResultCodesEnum> = {
@@ -23,6 +23,6 @@ export const tweetsAPI = {
 
 export const tagsAPI = {
     fetchTags() {
-        return data(instance.get<Array<tags>>(`themes`))
+        return data(instance.get<Array<TagType>>(`themes`))
     }
 }

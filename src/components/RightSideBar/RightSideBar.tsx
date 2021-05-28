@@ -16,8 +16,9 @@ import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../redux/reducers/tagsReducer';
-import { selectTags } from '../../redux/selectors/tags-selector';
+import { selectLoaded, selectTags } from '../../redux/selectors/tags-selector';
 import { Tag } from './Tag';
+import { Link } from 'react-router-dom';
 
 type PropsType = {
   classes: ReturnType<typeof useStyles>;
@@ -55,11 +56,13 @@ const SearchTextField = withStyles((theme) =>
 export const RightSideBar: React.FC<PropsType> = ({ classes }) => {
   let dispatch = useDispatch();
   let tags = useSelector(selectTags);
-  //   let users = useSelector();
+  // let users = useSelector();
+  let isLoadedTags = useSelector(selectLoaded);
 
   useEffect(() => {
     dispatch(actions.setFetchTagsAC());
   }, []);
+
   return (
     <div className={classes.rightNavBar}>
       <SearchTextField
@@ -76,18 +79,24 @@ export const RightSideBar: React.FC<PropsType> = ({ classes }) => {
         }}
         fullWidth
       />
-      <List className={classes.relevantTheme}>
-        <ListItem>
-          <Typography className={classes.title} variant="h6">
-            Актуальные темы
-          </Typography>
-        </ListItem>
+      {isLoadedTags ? (
+        <List className={classes.relevantTheme}>
+          <ListItem>
+            <Typography className={classes.title} variant="h6">
+              Актуальные темы
+            </Typography>
+          </ListItem>
 
-        <Divider component="li" />
-        {tags.map((tag, index) => (
-          <Tag classes={classes} tag={tag} key={index} />
-        ))}
-      </List>
+          <Divider component="li" />
+          {tags.map((tag, index) => (
+            <Link to={`/home/search?q=${tag.name}`}>
+              <Tag classes={classes} tag={tag} key={tag._id} />
+            </Link>
+          ))}
+        </List>
+      ) : (
+        <div></div>
+      )}
 
       <List className={classes.relevantTheme}>
         <ListItem>

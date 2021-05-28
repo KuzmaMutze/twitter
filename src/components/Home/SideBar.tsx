@@ -11,6 +11,7 @@ import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import CreateIcon from '@material-ui/icons/Create';
 import Modal from '../SignIn/Modal';
 import { WriteTweetForm } from './WriteTweetForm';
+import { Link } from 'react-router-dom';
 
 type PropsType = {
   classes: ReturnType<typeof useStyles>;
@@ -26,9 +27,11 @@ export const SideBar: React.FC<PropsType> = ({ classes }) => {
   return (
     <ul className={classes.navBar}>
       <li>
-        <IconButton className={classes.logo}>
-          <Twitter className={classes.logoIcon} color="primary"></Twitter>
-        </IconButton>
+        <Link to="/home">
+          <IconButton className={classes.logo}>
+            <Twitter className={classes.logoIcon} color="primary"></Twitter>
+          </IconButton>
+        </Link>
       </li>
       <li className={classes.navBarListItem}>
         <div>

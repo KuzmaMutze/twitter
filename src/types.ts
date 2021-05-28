@@ -17,7 +17,8 @@ export type Tweets = {
 }
 
 // theme 
-export type tags = {
+export type TagType = {
+    _id: number
     name: string
     count: number
 }
