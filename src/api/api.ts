@@ -1,6 +1,6 @@
   
 import axios from "axios";
-import { Tweets } from "../types";
+import { tags, Tweets } from "../types";
 import { data } from "./objHealper";
 
 // export type ResponseType<D = {}, RC = ResultCodesEnum> = {
@@ -11,12 +11,18 @@ import { data } from "./objHealper";
 
 
 export const instance = axios.create({
-    baseURL: `https://trycode.pw/`,
+    baseURL: `http://localhost:3001/`,
  
 })
 
 export const tweetsAPI = {
     fetchTweets() {
-        return data(instance.get<Array<Tweets>>(`c/2OBQ1.json`))
+        return data(instance.get<Array<Tweets>>(`tweets`))
+    }
+}
+
+export const tagsAPI = {
+    fetchTags() {
+        return data(instance.get<Array<tags>>(`themes`))
     }
 }

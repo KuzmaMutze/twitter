@@ -33,11 +33,11 @@ export const actions = {
 } 
 
  
-export function* fetchTweetsRequest(): any {
+export function* fetchTweetsRequest() {
     console.log("run request");
     try {
         yield put(actions.setTweetsLoadingStateAC(LoadingState.LOADING))
-        const data = yield call(tweetsAPI.fetchTweets)
+        const data: Array<Tweets> = yield call(tweetsAPI.fetchTweets)
         yield put(actions.setTweetsAC(data))
         console.log(data);
         yield put(actions.setTweetsLoadingStateAC(LoadingState.LOADED))
@@ -53,5 +53,3 @@ export function* tweetsSaga() {
     
     yield takeLatest("tweets/FETCH_TWEETS", fetchTweetsRequest)
 }
-
-

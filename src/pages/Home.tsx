@@ -2,23 +2,8 @@ import React, { useEffect } from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import SearchIcon from '@material-ui/icons/Search';
 import { grey } from '@material-ui/core/colors';
-import {
-  Container,
-  InputAdornment,
-  Typography,
-  withStyles,
-  Avatar,
-  IconButton,
-  TextField,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Divider,
-} from '@material-ui/core';
-import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
+import { Container, Typography } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { Tweet } from '../components/Home/Tweet';
@@ -26,41 +11,8 @@ import { SideBar } from '../components/Home/SideBar';
 import { WriteTweetForm } from '../components/Home/WriteTweetForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../redux/reducers/tweetsReducer';
-import {
-  selectIsLoading,
-  selectIsTweetsIsLoaded,
-  selectIsTweetsIsLoading,
-  selectTweets,
-} from '../redux/selectors/tweets-selector';
-
-const SearchTextField = withStyles((theme) =>
-  createStyles({
-    root: {
-      border: 'none',
-      '& input ': {
-        padding: '14.5px 5px 16.5px',
-        border: 'none',
-      },
-      '& .MuiOutlinedInput-root': {
-        border: 'none',
-        borderRadius: 30,
-        backgroundColor: '#E6ECF0',
-        padding: 0,
-        paddingLeft: 15,
-        '&.Mui-focused': {
-          border: 'none',
-          backgroundColor: '#fff',
-          '& fieldset': { borderWidth: 1, borderColor: theme.palette.primary.main },
-          '& svg path': { fill: theme.palette.primary.main },
-        },
-        '& input ': {
-          padding: '14.5px 5px 16.5px',
-          border: 'none',
-        },
-      },
-    },
-  }),
-)(TextField);
+import { selectIsTweetsIsLoading, selectTweets } from '../redux/selectors/tweets-selector';
+import { RightSideBar } from '../components/RightSideBar/RightSideBar';
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -214,15 +166,13 @@ export const useStyles = makeStyles((theme: Theme) =>
     // rightNavBar
     rightNavBar: {
       position: 'sticky',
+      top: 0,
       paddingTop: '15px',
     },
     relevantTheme: {
       marginTop: '20px',
       borderRadius: 10,
       backgroundColor: '#F6F7FA',
-      // '& h6': {
-
-      // },
     },
     title: {
       fontWeight: 800,
@@ -289,89 +239,7 @@ export const Home: React.FC<PropsType> = (props) => {
         </Grid>
         {/* right side bar */}
         <Grid item xs={4} lg={3}>
-          <div className={classes.rightNavBar}>
-            <SearchTextField
-              variant="outlined"
-              placeholder="Поиск по Твиттеру"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    {/* <IconButton> */}
-                    <SearchIcon />
-                    {/* </IconButton> */}
-                  </InputAdornment>
-                ),
-              }}
-              fullWidth
-            />
-            <List className={classes.relevantTheme}>
-              <ListItem>
-                <Typography className={classes.title} variant="h6">
-                  Актуальные темы
-                </Typography>
-              </ListItem>
-
-              <Divider component="li" />
-
-              <ListItem className={classes.relevantThemeItem}>
-                <ListItemText
-                  primary="Санкт-Питербург"
-                  secondary={
-                    <Typography variant="body2" component="span">
-                      Твитов: 3 132
-                    </Typography>
-                  }
-                />
-              </ListItem>
-
-              <Divider component="li" />
-
-              <ListItem className={classes.relevantThemeItem}>
-                <ListItemText
-                  primary="Санкт-Питербург"
-                  secondary={
-                    <Typography variant="body2" component="span">
-                      Твитов: 3 132
-                    </Typography>
-                  }
-                />
-              </ListItem>
-
-              <Divider component="li" />
-            </List>
-
-            <List className={classes.relevantTheme}>
-              <ListItem>
-                <Typography className={classes.title} variant="h6">
-                  Кого читать
-                </Typography>
-              </ListItem>
-
-              <Divider component="li" />
-
-              <ListItem className={classes.relevantThemeItem}>
-                <ListItemAvatar>
-                  <Avatar
-                    alt={`Аватарка пользователя ${'name'}`}
-                    src={`https://yt3.ggpht.com/ytc/AAUvwnizbI8uvSXJvnD1M9K1mTFgc9qUPmrjK4mScXUWZQ=s88-c-k-c0x00ffffff-no-rj`}
-                  />
-                </ListItemAvatar>
-                <ListItemText
-                  primary="Dock Of Shame"
-                  secondary={
-                    <Typography variant="body2" component="span">
-                      @FavDockOfShame
-                    </Typography>
-                  }
-                />
-                <IconButton>
-                  <PersonAddOutlinedIcon color="primary" />
-                </IconButton>
-              </ListItem>
-
-              <Divider component="li" />
-            </List>
-          </div>
+          <RightSideBar classes={classes} />
         </Grid>
       </Grid>
     </Container>
