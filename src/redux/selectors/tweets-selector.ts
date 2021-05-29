@@ -6,5 +6,8 @@ export const selectIsLoading = (state: AppStateType) => state.tweets.isLoaded
 export const selectIsTweetsIsLoading = (state: AppStateType) => selectIsLoading(state) === LoadingState.LOADING
 export const selectIsTweetsIsLoaded = (state: AppStateType) => selectIsLoading(state) === LoadingState.LOADED
 
+export const selectTweet = (state: AppStateType) => state.tweet.item
+export const selectIsLoadingTweet = (state: AppStateType) => state.tweet.isLoaded
+export const selectIsLoadedTweet = (state: AppStateType) => selectIsLoadingTweet(state) === LoadingState.LOADED
 
 

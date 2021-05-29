@@ -18,6 +18,9 @@ export const instance = axios.create({
 export const tweetsAPI = {
     fetchTweets() {
         return data(instance.get<Array<Tweets>>(`tweets`))
+    },
+    fetchTweet(id: string) {
+        return data(instance.get<Tweets>(`tweets?_id=${id}`))
     }
 }
 

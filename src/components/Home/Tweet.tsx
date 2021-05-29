@@ -1,13 +1,14 @@
-import { Paper, Grid, Avatar, Typography, IconButton } from '@material-ui/core';
-import classNames from 'classnames';
+import { Paper, Avatar, Typography, IconButton } from '@material-ui/core';
 import React from 'react';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import RepostIcon from '@material-ui/icons/Repeat';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ReplyOutlinedIcon from '@material-ui/icons/ReplyOutlined';
 import { useStyles } from '../../pages/Home';
+import { Link } from 'react-router-dom';
 
 type PropsType = {
+  _id: string;
   text: string;
   classes: ReturnType<typeof useStyles>;
   user: {
@@ -16,9 +17,9 @@ type PropsType = {
     avatarUrl: string;
   };
 };
-export const Tweet: React.FC<PropsType> = ({ classes, user, text }) => {
+export const Tweet: React.FC<PropsType> = ({ classes, user, text, _id }) => {
   return (
-    <div>
+    <Link className={classes.tweetWrapper} to={`/home/tweet/${_id}`}>
       <Paper className={classes.tweet} variant="outlined">
         <Avatar
           className={classes.tweetAvatar}
@@ -59,6 +60,6 @@ export const Tweet: React.FC<PropsType> = ({ classes, user, text }) => {
           </div>
         </div>
       </Paper>
-    </div>
+    </Link>
   );
 };

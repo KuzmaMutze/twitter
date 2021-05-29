@@ -14,6 +14,8 @@ import { actions } from '../redux/reducers/tweetsReducer';
 import { selectIsTweetsIsLoading, selectTweets } from '../redux/selectors/tweets-selector';
 import { RightSideBar } from '../components/RightSideBar/RightSideBar';
 import { Route } from 'react-router';
+import { BackBtn } from '../components/commons/BackBtn';
+import { FullTweet } from '../components/FullTweet/FullTweet';
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -126,11 +128,18 @@ export const useStyles = makeStyles((theme: Theme) =>
       borderLeft: 0,
       borderRight: 0,
       padding: '10px 15px',
+      display: 'flex',
+      alignItems: 'center',
+
       '& h6': {
         fontWeight: 800,
       },
     },
 
+    tweetWrapper: {
+      color: 'inherit',
+      textDecoration: 'none',
+    },
     tweet: {
       borderRadius: 0,
       borderTop: 0,
@@ -213,7 +222,7 @@ export const Home: React.FC<PropsType> = (props) => {
 
   useEffect(() => {
     dispatch(actions.setFetchTweetsAC());
-  }, []);
+  }, [dispatch]);
   return (
     <Container className={classes.wrapper} maxWidth="lg">
       <Grid container spacing={2}>
@@ -225,16 +234,33 @@ export const Home: React.FC<PropsType> = (props) => {
         <Grid item xs={7} lg={6}>
           <Paper className={classes.tweetsWrppaer} variant="outlined">
             <Paper className={classes.tweetsHeader} variant="outlined">
-              <Typography variant="h6">Главная</Typography>
+              <Route path={`/home`} exact>
+                <Typography variant="h6">Твиты</Typography>
+              </Route>
+
+              <Route path={['/home/tweet', '/home/search']}>
+                <BackBtn />
+                <Typography variant="h6">Твитнуть</Typography>
+              </Route>
             </Paper>
-            <div style={{ padding: '20px 15px 15px' }}>
-              <WriteTweetForm classes={classes} />
-            </div>
-            <hr className={classes.borderunderAddTweetForm} />
+
+            <Route path={['/home', '/home/search']} exact>
+              <div style={{ padding: '20px 15px 15px' }}>
+                <WriteTweetForm classes={classes} />
+              </div>
+              <hr className={classes.borderunderAddTweetForm} />
+            </Route>
+
             <Route path="/home" exact>
               {!isLoading ? (
                 tweets.map((tweet) => (
-                  <Tweet key={tweet._id} text={tweet.text} classes={classes} user={tweet.user} />
+                  <Tweet
+                    key={tweet._id}
+                    _id={tweet._id}
+                    text={tweet.text}
+                    classes={classes}
+                    user={tweet.user}
+                  />
                 ))
               ) : (
                 <div className={classes.loadingTweetsCenter}>
@@ -242,6 +268,8 @@ export const Home: React.FC<PropsType> = (props) => {
                 </div>
               )}
             </Route>
+
+            <Route exact path={`/home/tweet/:id`} component={FullTweet}></Route>
           </Paper>
         </Grid>
         {/* right side bar */}

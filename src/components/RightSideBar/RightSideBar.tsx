@@ -61,7 +61,7 @@ export const RightSideBar: React.FC<PropsType> = ({ classes }) => {
 
   useEffect(() => {
     dispatch(actions.setFetchTagsAC());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={classes.rightNavBar}>
@@ -88,9 +88,9 @@ export const RightSideBar: React.FC<PropsType> = ({ classes }) => {
           </ListItem>
 
           <Divider component="li" />
-          {tags.map((tag, index) => (
-            <Link to={`/home/search?q=${tag.name}`}>
-              <Tag classes={classes} tag={tag} key={tag._id} />
+          {tags.map((tag) => (
+            <Link key={tag._id} to={`/home/search?q=${tag.name}`}>
+              <Tag classes={classes} tag={tag} />
             </Link>
           ))}
         </List>

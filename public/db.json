@@ -1,13 +1,13 @@
 {
     "tweets": [
     {
-    "_id": "5f625ff6bd97609c6925e2b4",
-    "text": "In ad dolor labore ea est laboris commodo elit consequat nulla exercitation cupidatat. Ex nostrud nulla qui nisi cupidatat fugiat duis. Officia occaecat fugiat voluptate sit. Sint est exercitation laboris proident aute consectetur eu aliqua minim sint sint ea aute velit. Ullamco dolore qui mollit non sint sunt consequat quis.",
-    "user": {
-        "fullname": "Dickerson Mcleod",
-        "username": "kirk",
-        "avatarUrl": "https://source.unsplash.com/random/100x100?3"
-    }
+        "_id": "5f625ff6bd97609c6925e2b4",
+        "text": "In ad dolor labore ea est laboris commodo elit consequat nulla exercitation cupidatat. Ex nostrud nulla qui nisi cupidatat fugiat duis. Officia occaecat fugiat voluptate sit. Sint est exercitation laboris proident aute consectetur eu aliqua minim sint sint ea aute velit. Ullamco dolore qui mollit non sint sunt consequat quis.",
+        "user": {
+            "fullname": "Dickerson Mcleod",
+            "username": "kirk",
+            "avatarUrl": "https://source.unsplash.com/random/100x100?3"
+        }
     },
     {
     "_id": "5f625ff6d7a13d513245b194",
