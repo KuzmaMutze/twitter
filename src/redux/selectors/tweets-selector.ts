@@ -10,4 +10,5 @@ export const selectTweet = (state: AppStateType) => state.tweet.item
 export const selectIsLoadingTweet = (state: AppStateType) => state.tweet.isLoaded
 export const selectIsLoadedTweet = (state: AppStateType) => selectIsLoadingTweet(state) === LoadingState.LOADED
 
+export const selectIsLoadedAddForm = (state: AppStateType) => state.tweets.isLoadedAddForm 
 

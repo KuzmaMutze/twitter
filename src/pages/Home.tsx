@@ -210,6 +210,44 @@ export const useStyles = makeStyles((theme: Theme) =>
       marginTop: 150,
       textAlign: 'center',
     },
+    fullTweetWrapper: {
+      padding: 20,
+    },
+    fullTweetHeader: {
+      display: 'flex',
+    },
+    fullTweetHeaderName: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    fullTweetText: {
+      fontSize: 24,
+      marginTop: 20,
+      lineHeight: 1.4125,
+      wordBreak: 'break-word',
+    },
+    fullTweetStat: {
+      borderRadius: 0,
+      borderBottom: 0,
+      borderLeft: 0,
+      borderRight: 0,
+      padding: '16px 20px',
+    },
+    fullTweetStatCount: {
+      marginRight: 15,
+    },
+    fullTweetGroupBtn: {
+      padding: '0px 20px',
+
+      borderRadius: 0,
+      borderLeft: 0,
+      borderRight: 0,
+      '& div': {
+        marginTop: 3,
+        marginBottom: 3,
+        justifyContent: 'space-around',
+      },
+    },
   }),
 );
 

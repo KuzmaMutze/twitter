@@ -1,5 +1,3 @@
-import { Tweet } from './../components/Home/Tweet';
-  
 import axios from "axios";
 import { TagType, Tweets } from "../types";
 import { data } from "./objHealper";
@@ -18,7 +16,7 @@ export const instance = axios.create({
 
 export const tweetsAPI = {
     fetchTweets() {
-        return data(instance.get<Array<Tweets>>(`tweets`))
+        return data(instance.get<Array<Tweets>>(`tweets?_sort=id&_order=desc`))
     },
     fetchTweet(id: string) {
         return data(instance.get<Tweets>(`tweets?_id=${id}`))

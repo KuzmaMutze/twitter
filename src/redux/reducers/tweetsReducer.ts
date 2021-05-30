@@ -1,5 +1,5 @@
 import produce, { Draft } from 'immer'
-import { LoadingState, Tweets } from '../../types'
+import {  LoadingState, Tweets } from '../../types'
 import { InferActionTypes } from '../store'
 import {call, put, takeLatest } from 'redux-saga/effects'
 import { tweetsAPI } from '../../api/api'
@@ -7,7 +7,8 @@ import { tweetsAPI } from '../../api/api'
 
 const initialState = {
     items: [] as Array<Tweets>,
-    isLoaded: "" as LoadingState
+    isLoaded: "" as LoadingState,
+    isLoadedAddForm: "" as LoadingState,
 }
 
 type initialStateType = typeof initialState
@@ -19,7 +20,9 @@ export const tweetsReducer = produce((draft: Draft<initialStateType>, action: Ac
         draft.items = action.payload
     } else if(action.type === "tweets/SET_LOADING_STATE"){
         draft.isLoaded = action.payload
-    } else if(action.type === "tweets/FETCH_TWEETS"){
+    } else if(action.type === "tweets/SET_LOADING_ADD_FORM_STATE"){
+        draft.isLoadedAddForm = action.payload
+    }else if(action.type === "tweets/FETCH_TWEETS"){
         draft.items = []
     } else if(action.type === "tweets/ADD_TWEET"){
         draft.items.push(action.payload)
@@ -31,6 +34,7 @@ export const actions = {
     setTweetsAC: (payload: Array<Tweets>) => ({type: "tweets/SET_TWEETS", payload} as const),
     setFetchTweetsAC: () => ({type: "tweets/FETCH_TWEETS"} as const),
     setTweetsLoadingStateAC: (payload: LoadingState) => ({type: "tweets/SET_LOADING_STATE", payload} as const),
+    setAddFormLoadingStateAC: (payload: LoadingState) => ({type: "tweets/SET_LOADING_ADD_FORM_STATE", payload} as const),
     fetchAddTweetAC: (payload: string) => ({type: "tweets/FETCH_ADD_TWEET", payload} as const),
     addTweetAC: (payload: Tweets) => ({type: "tweets/ADD_TWEET", payload} as const)
 } 
@@ -41,7 +45,6 @@ export function* fetchTweetsRequest() {
         yield put(actions.setTweetsLoadingStateAC(LoadingState.LOADING))
         const data: Array<Tweets> = yield call(tweetsAPI.fetchTweets)
         yield put(actions.setTweetsAC(data))
-        console.log(data);
         yield put(actions.setTweetsLoadingStateAC(LoadingState.LOADED))
     } catch (error) {
         yield put(actions.setTweetsLoadingStateAC(LoadingState.ERROR))
@@ -59,14 +62,13 @@ export function* fetchAddTweet({payload}: ReturnType<typeof actions.fetchAddTwee
                 avatarUrl: "https://source.unsplash.com/random/100x100?3"
               }
         }
-        console.log(data);
         
-        // yield put(actions.setTweetLoadingStateAC(LoadingState.LOADING))
+        yield put(actions.setAddFormLoadingStateAC(LoadingState.LOADING))
         yield call(tweetsAPI.addTweet, data)
         yield put(actions.addTweetAC(data))
-        // yield put(actions.setTweetLoadingStateAC(LoadingState.LOADED))
+        yield put(actions.setAddFormLoadingStateAC(LoadingState.LOADED))
     } catch (error) {
-        // yield put(actions.setTweetLoadingStateAC(LoadingState.ERROR))
+        yield put(actions.setAddFormLoadingStateAC(LoadingState.ERROR))
     }
  
 }

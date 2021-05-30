@@ -1,18 +1,14 @@
-import {
-  Paper,
-  Avatar,
-  TextareaAutosize,
-  IconButton,
-  Typography,
-  CircularProgress,
-  Button,
-} from '@material-ui/core';
+import { Paper, Avatar, TextareaAutosize, IconButton, Typography, Button } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Alert from '@material-ui/lab/Alert';
 import React, { useState } from 'react';
 import CropOriginalOutlinedIcon from '@material-ui/icons/CropOriginalOutlined';
 import SentimentSatisfiedOutlinedIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
 import { useStyles } from '../../pages/Home';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../redux/reducers/tweetsReducer';
+import { selectIsLoadedAddForm } from '../../redux/selectors/tweets-selector';
+import { LoadingState } from '../../types';
 
 type PropsType = {
   classes: ReturnType<typeof useStyles>;
@@ -21,18 +17,22 @@ type PropsType = {
 
 export const WriteTweetForm: React.FC<PropsType> = ({ maxRows, classes }) => {
   let dispatch = useDispatch();
+
+  // text area
   let [text, setText] = useState<string>('');
   let textLimitPercent = Math.round((text.length / 280) * 100);
   let maxLenght = 280 - text.length;
-
   let onChangeTextArea = (e: React.FormEvent<HTMLTextAreaElement>) => {
     setText(e.currentTarget.value);
   };
-
   let handleOnClickAddTweet = () => {
     dispatch(actions.fetchAddTweetAC(text));
     setText('');
   };
+
+  // result add tweet
+  let isLoadedAddForm = useSelector(selectIsLoadedAddForm);
+
   return (
     <div>
       <Paper className={classes.writeTweet} variant="outlined">
@@ -83,15 +83,27 @@ export const WriteTweetForm: React.FC<PropsType> = ({ maxRows, classes }) => {
               )}
               <Button
                 onClick={() => handleOnClickAddTweet()}
-                disabled={text.length > 280}
+                disabled={isLoadedAddForm === LoadingState.LOADING || !text || text.length > 280}
                 color="primary"
                 variant="contained">
-                Твитнуть
+                {isLoadedAddForm === LoadingState.LOADING ? (
+                  <CircularProgress color="secondary" size={18} />
+                ) : (
+                  'Твитнуть'
+                )}
               </Button>
             </div>
           </div>
         </div>
       </Paper>
+      {isLoadedAddForm === LoadingState.ERROR && (
+        <Alert style={{ marginTop: 10 }} severity="error">
+          Ошибка при добавление твита{' '}
+          <span aria-label="emoji-plak" role="img">
+            🙁
+          </span>
+        </Alert>
+      )}
     </div>
   );
 };

@@ -1,4 +1,3 @@
-import { Tweet } from './../../components/Home/Tweet';
 import produce, { Draft } from 'immer'
 import { LoadingState, Tweets } from '../../types'
 import { InferActionTypes } from '../store'
@@ -31,8 +30,6 @@ export const actions = {
     setTweetAC: (payload: Tweets | null) => ({type: "tweet/SET_TWEET", payload} as const),
     setFetchTweetAC: (payload: string) => ({type: "tweet/FETCH_TWEET", payload} as const),
     setTweetLoadingStateAC: (payload: LoadingState) => ({type: "tweet/SET_LOADING_STATE", payload} as const),
-   
-
 } 
 
  
