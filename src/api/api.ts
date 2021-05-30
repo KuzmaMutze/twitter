@@ -1,3 +1,4 @@
+import { Tweet } from './../components/Home/Tweet';
   
 import axios from "axios";
 import { TagType, Tweets } from "../types";
@@ -21,6 +22,9 @@ export const tweetsAPI = {
     },
     fetchTweet(id: string) {
         return data(instance.get<Tweets>(`tweets?_id=${id}`))
+    },
+    addTweet(payload: Tweets) {
+        return data(instance.post<Tweets>(`tweets`, payload))
     }
 }
 

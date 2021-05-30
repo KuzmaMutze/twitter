@@ -11,6 +11,8 @@ import React, { useState } from 'react';
 import CropOriginalOutlinedIcon from '@material-ui/icons/CropOriginalOutlined';
 import SentimentSatisfiedOutlinedIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
 import { useStyles } from '../../pages/Home';
+import { useDispatch } from 'react-redux';
+import { actions } from '../../redux/reducers/tweetsReducer';
 
 type PropsType = {
   classes: ReturnType<typeof useStyles>;
@@ -18,6 +20,7 @@ type PropsType = {
 };
 
 export const WriteTweetForm: React.FC<PropsType> = ({ maxRows, classes }) => {
+  let dispatch = useDispatch();
   let [text, setText] = useState<string>('');
   let textLimitPercent = Math.round((text.length / 280) * 100);
   let maxLenght = 280 - text.length;
@@ -25,10 +28,10 @@ export const WriteTweetForm: React.FC<PropsType> = ({ maxRows, classes }) => {
   let onChangeTextArea = (e: React.FormEvent<HTMLTextAreaElement>) => {
     setText(e.currentTarget.value);
   };
-  console.log('Render');
 
   let handleOnClickAddTweet = () => {
-    console.log(123);
+    dispatch(actions.fetchAddTweetAC(text));
+    setText('');
   };
   return (
     <div>
@@ -79,7 +82,7 @@ export const WriteTweetForm: React.FC<PropsType> = ({ maxRows, classes }) => {
                 </>
               )}
               <Button
-                onClick={handleOnClickAddTweet}
+                onClick={() => handleOnClickAddTweet()}
                 disabled={text.length > 280}
                 color="primary"
                 variant="contained">

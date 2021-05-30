@@ -1,3 +1,4 @@
+import { Tweet } from './../../components/Home/Tweet';
 import produce, { Draft } from 'immer'
 import { LoadingState, Tweets } from '../../types'
 import { InferActionTypes } from '../store'
@@ -29,14 +30,14 @@ export const tweetReducer = produce((draft: Draft<initialStateType>, action: Act
 export const actions = {
     setTweetAC: (payload: Tweets | null) => ({type: "tweet/SET_TWEET", payload} as const),
     setFetchTweetAC: (payload: string) => ({type: "tweet/FETCH_TWEET", payload} as const),
-    setTweetLoadingStateAC: (payload: LoadingState) => ({type: "tweet/SET_LOADING_STATE", payload} as const)
+    setTweetLoadingStateAC: (payload: LoadingState) => ({type: "tweet/SET_LOADING_STATE", payload} as const),
+   
 
 } 
 
  
 export function* fetchTweetRequest({payload: tweetId}: ReturnType<typeof actions.setFetchTweetAC>) {
-    console.log(tweetId);
-    
+
     try {
         yield put(actions.setTweetLoadingStateAC(LoadingState.LOADING))
         const data: Array<Tweets> = yield call(tweetsAPI.fetchTweet, tweetId)
@@ -45,11 +46,12 @@ export function* fetchTweetRequest({payload: tweetId}: ReturnType<typeof actions
     } catch (error) {
         yield put(actions.setTweetLoadingStateAC(LoadingState.ERROR))
     }
-    
-    
-    
+ 
 }
+
+
+
 export function* tweetSaga() {
-// @ts-ignore
     yield takeLatest("tweet/FETCH_TWEET", fetchTweetRequest)
+    
 }
