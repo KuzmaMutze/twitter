@@ -155,6 +155,14 @@ export const useStyles = makeStyles((theme: Theme) =>
       },
       cursor: 'pointer',
     },
+    tweetHeader: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    tweetContent: {
+      flex: 1,
+    },
     tweetAvatar: {
       marginRight: 20,
       width: theme.spacing(6),
@@ -248,6 +256,13 @@ export const useStyles = makeStyles((theme: Theme) =>
         justifyContent: 'space-around',
       },
     },
+    userInfo: {
+      position: 'relative',
+      bottom: '0',
+      display: 'flex',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+    },
   }),
 );
 
@@ -298,6 +313,7 @@ export const Home: React.FC<PropsType> = (props) => {
                     text={tweet.text}
                     classes={classes}
                     user={tweet.user}
+                    createdAt={tweet.createdAt}
                   />
                 ))
               ) : (

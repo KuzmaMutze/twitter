@@ -1,5 +1,5 @@
 import produce, { Draft } from 'immer'
-import { LoadingState, Tweets } from '../../types'
+import { LoadingState, ResponseType, Tweets } from '../../types'
 import { InferActionTypes } from '../store'
 import {call, put, takeLatest } from 'redux-saga/effects'
 import { tweetsAPI } from '../../api/api'
@@ -37,8 +37,8 @@ export function* fetchTweetRequest({payload: tweetId}: ReturnType<typeof actions
 
     try {
         yield put(actions.setTweetLoadingStateAC(LoadingState.LOADING))
-        const data: Array<Tweets> = yield call(tweetsAPI.fetchTweet, tweetId)
-        yield put(actions.setTweetAC(data[0]))
+        const data: ResponseType<Tweets> = yield call(tweetsAPI.fetchTweet, tweetId)
+        yield put(actions.setTweetAC(data.data))
         yield put(actions.setTweetLoadingStateAC(LoadingState.LOADED))
     } catch (error) {
         yield put(actions.setTweetLoadingStateAC(LoadingState.ERROR))

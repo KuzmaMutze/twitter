@@ -6,7 +6,7 @@ export enum LoadingState {
     NEVER = 'NEVER'
 }
 
-export type Tweets = {
+export type Tweets = { 
     _id: string
     text: string
     user: {
@@ -14,6 +14,12 @@ export type Tweets = {
         username: string
         avatarUrl: string
     }
+    createdAt: string
+}
+
+export type ResponseType<T> = {
+    status: string
+    data: T
 }
 
 // theme 

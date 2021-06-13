@@ -6,13 +6,17 @@ import Typography from '@material-ui/core/Typography/Typography';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import { useStyles } from '../../pages/Home';
-import { actions } from '../../redux/reducers/tweetReducer';
 import { selectIsLoadedTweet, selectTweet } from '../../redux/selectors/tweets-selector';
+import format from 'date-fns/format';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import RepostIcon from '@material-ui/icons/Repeat';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ReplyOutlinedIcon from '@material-ui/icons/ReplyOutlined';
+import ruLang from 'date-fns/locale/ru';
+
+import { formatDate } from '../../utils/formatDate';
+import { actions } from '../../redux/reducers/tweetReducer';
+import { useStyles } from '../../pages/Home';
 
 type PropsType = {};
 export const FullTweet: React.FC<PropsType> = (props) => {
@@ -21,7 +25,6 @@ export const FullTweet: React.FC<PropsType> = (props) => {
   let tweet = useSelector(selectTweet);
   let isLoading = useSelector(selectIsLoadedTweet);
   let id = params.id;
-  console.log(isLoading);
 
   let dispatch = useDispatch();
   useEffect(() => {
@@ -60,7 +63,9 @@ export const FullTweet: React.FC<PropsType> = (props) => {
             <Typography
               style={{ fontSize: 15, paddingTop: '15px' }}
               className={classes.tweetsUserName}>
-              5:57 PM · 29 мая 2021 г. · Twitter Web App
+              {format(new Date(tweet.createdAt), 'H:mm', { locale: ruLang })} ·{' '}
+              {format(new Date(tweet.createdAt), 'dd MMM yyyy г.', { locale: ruLang })} · Twitter
+              Web App
             </Typography>
           </Paper>
           <Paper className={classes.fullTweetStat} variant="outlined">

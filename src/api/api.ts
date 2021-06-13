@@ -1,5 +1,5 @@
 import axios from "axios";
-import { TagType, Tweets } from "../types";
+import { ResponseType, TagType, Tweets } from "../types";
 import { data } from "./objHealper";
 
 // export type ResponseType<D = {}, RC = ResultCodesEnum> = {
@@ -10,24 +10,28 @@ import { data } from "./objHealper";
 
 
 export const instance = axios.create({
-    baseURL: `http://localhost:3001/`,
- 
+    baseURL: `http://localhost:8888/`,
+    headers: {
+        token: window.localStorage.getItem('token')
+    }
 })
+
+
 
 export const tweetsAPI = {
     fetchTweets() {
-        return data(instance.get<Array<Tweets>>(`tweets?_sort=id&_order=desc`))
+        return data(instance.get<ResponseType<Tweets>>(`tweets`))
     },
     fetchTweet(id: string) {
-        return data(instance.get<Tweets>(`tweets?_id=${id}`))
+        return data(instance.get<ResponseType<Tweets>>(`tweets/${id}`))
     },
-    addTweet(payload: Tweets) {
-        return data(instance.post<Tweets>(`tweets`, payload))
+    addTweet(payload: string) {
+        return data(instance.post<ResponseType<Tweets>>(`tweets`, {text: payload}))
     }
 }
 
 export const tagsAPI = {
     fetchTags() {
-        return data(instance.get<Array<TagType>>(`themes`))
+        return data(instance.get<ResponseType<TagType>>(`themes`))
     }
 }
