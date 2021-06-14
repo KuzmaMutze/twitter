@@ -141,6 +141,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       textDecoration: 'none',
     },
     tweet: {
+      position: 'relative',
       borderRadius: 0,
       borderTop: 0,
       borderLeft: 0,
@@ -162,6 +163,11 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     tweetContent: {
       flex: 1,
+    },
+    tweetPopupMenu: {
+      position: 'absolute',
+      right: 10,
+      top: 10,
     },
     tweetAvatar: {
       marginRight: 20,

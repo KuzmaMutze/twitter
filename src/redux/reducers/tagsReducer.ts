@@ -38,7 +38,6 @@ export function* fetchTagsRequest() {
         yield put(actions.setTweetsLoadingStateAC(LoadingState.LOADING))
         const data: Array<TagType> = yield call(tagsAPI.fetchTags)
         yield put(actions.setTagsAC(data))
-        console.log(data);
         yield put(actions.setTweetsLoadingStateAC(LoadingState.LOADED))
     } catch (error) {
         yield put(actions.setTweetsLoadingStateAC(LoadingState.ERROR))

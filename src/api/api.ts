@@ -1,5 +1,7 @@
 import axios from "axios";
-import { ResponseType, TagType, Tweets } from "../types";
+import { SignInFormPropsType } from "../components/SignIn/ModalSignIn";
+import { SignUpFormPropsType } from "../components/SignIn/ModalSignUp";
+import { ResponseType, TagType, Tweets, UserType } from "../types";
 import { data } from "./objHealper";
 
 // export type ResponseType<D = {}, RC = ResultCodesEnum> = {
@@ -16,7 +18,17 @@ export const instance = axios.create({
     }
 })
 
-
+export const authAPI = {
+    auth(payload: SignInFormPropsType) {
+        return data(instance.post<ResponseType<UserType>>(`auth/login`, { username: payload.email, password: payload.password}))
+    },
+    me() {
+        return data(instance.get<ResponseType<UserType>>(`users/me`))
+    },
+    signUp(payload: SignUpFormPropsType) {
+        return data(instance.post<ResponseType<UserType>>(`auth/signup`, {email: payload.email,  username: payload.username, fullname: payload.fullname, password: payload.password,  password2: payload.password2}))
+    }
+}
 
 export const tweetsAPI = {
     fetchTweets() {

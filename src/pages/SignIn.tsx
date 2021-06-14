@@ -7,8 +7,10 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 
 import { FormControl, FormGroup, TextField } from '@material-ui/core';
 import { ModalBlock } from '../components/SignIn/Modal';
+import { ModalSignIn } from '../components/SignIn/ModalSignIn';
+import { ModalSignUp } from '../components/SignIn/ModalSignUp';
 
-const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles((theme) => ({
   wrapper: {
     display: 'flex',
     height: 'calc(100vh - 84px)',
@@ -153,88 +155,16 @@ export const SignIn: React.FC = (props) => {
             </Button>
           </div>
         </div>
-        <ModalBlock
-          title="Войти в Twitter"
-          visible={visibleModal === 'signIn'}
-          onClose={handleCloseModal}>
-          <FormControl fullWidth>
-            <FormGroup row>
-              <TextField
-                id="email"
-                type="text"
-                label="E-Mail"
-                margin="normal"
-                variant="filled"
-                autoFocus
-                fullWidth
-              />
-
-              <TextField
-                id="password"
-                type="password"
-                label="Password"
-                margin="normal"
-                variant="filled"
-                autoFocus
-                fullWidth
-              />
-            </FormGroup>
-            <DialogActions className={classes.dialogActions}>
-              <Button onClick={handleCloseModal} color="primary">
-                Cancel
-              </Button>
-              <Button onClick={handleCloseModal} color="primary" variant="contained">
-                Sign in
-              </Button>
-            </DialogActions>
-          </FormControl>
-        </ModalBlock>
-        <ModalBlock
-          title="Создайте учетуню записать"
-          visible={visibleModal === 'signUp'}
-          onClose={handleCloseModal}>
-          <FormControl fullWidth>
-            <FormGroup row>
-              <TextField
-                id="name"
-                type="text"
-                label="Name"
-                margin="normal"
-                variant="filled"
-                autoFocus
-                fullWidth
-              />
-
-              <TextField
-                id="email"
-                type="text"
-                label="E-Mail"
-                margin="normal"
-                variant="filled"
-                autoFocus
-                fullWidth
-              />
-
-              <TextField
-                id="password"
-                type="password"
-                label="Password"
-                margin="normal"
-                variant="filled"
-                autoFocus
-                fullWidth
-              />
-            </FormGroup>
-            <DialogActions className={classes.dialogActions}>
-              <Button onClick={handleCloseModal} color="primary">
-                Cancel
-              </Button>
-              <Button onClick={handleCloseModal} color="primary" variant="contained">
-                Sign in
-              </Button>
-            </DialogActions>
-          </FormControl>
-        </ModalBlock>
+        <ModalSignIn
+          open={visibleModal === 'signIn'}
+          handleCloseModal={handleCloseModal}
+          classes={classes}
+        />
+        <ModalSignUp
+          open={visibleModal === 'signUp'}
+          handleCloseModal={handleCloseModal}
+          classes={classes}
+        />
       </div>
       <footer className={classes.footer}>
         <ul>

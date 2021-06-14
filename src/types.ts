@@ -28,3 +28,14 @@ export type TagType = {
     name: string
     count: number
 }
+
+// auth 
+export type UserType = {
+    confirmed: boolean
+    email: string
+    fullname: string
+    token: string
+    username: string
+    __v: number
+    _id: string
+}

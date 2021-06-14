@@ -1,5 +1,6 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux'
 import createSagaMiddleware from 'redux-saga';
+import { authReducer } from './reducers/authReducer';
 import { tagsReducer } from './reducers/tagsReducer';
 import { tweetReducer } from './reducers/tweetReducer';
 import  { tweetsReducer } from './reducers/tweetsReducer';
@@ -8,7 +9,8 @@ import rootSaga from './sagas';
 let rootReducers = combineReducers({
     tweets: tweetsReducer,
     tweet: tweetReducer,
-    tags: tagsReducer
+    tags: tagsReducer,
+    auth: authReducer
 });
 
 type RootReducerType = typeof rootReducers; // (globalstate: AppStateType) => AppStateType

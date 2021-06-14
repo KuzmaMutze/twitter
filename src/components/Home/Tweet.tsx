@@ -5,7 +5,7 @@ import RepostIcon from '@material-ui/icons/Repeat';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ReplyOutlinedIcon from '@material-ui/icons/ReplyOutlined';
 import { useStyles } from '../../pages/Home';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { formatDate } from '../../utils/formatDate';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
@@ -20,6 +20,7 @@ type PropsType = {
   };
   createdAt: string;
 };
+
 export const Tweet: React.FC<PropsType> = ({ classes, user, text, _id, createdAt }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -59,7 +60,7 @@ export const Tweet: React.FC<PropsType> = ({ classes, user, text, _id, createdAt
                   {formatDate(new Date(createdAt))}
                 </span>
               </div>
-              <div>
+              <div className={classes.tweetPopupMenu}>
                 <IconButton
                   aria-label="more"
                   aria-controls="long-menu"
