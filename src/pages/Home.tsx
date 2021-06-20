@@ -16,6 +16,7 @@ import { RightSideBar } from '../components/RightSideBar/RightSideBar';
 import { Route } from 'react-router';
 import { BackBtn } from '../components/commons/BackBtn';
 import { FullTweet } from '../components/FullTweet/FullTweet';
+import { Profile } from './Profile';
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,10 +33,18 @@ export const useStyles = makeStyles((theme: Theme) =>
       listStyle: 'none',
       padding: 0,
       margin: 0,
-      position: 'sticky',
+
       top: 0,
     },
+    sideBarWrapper: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      height: '100%',
+      position: 'fixed',
+    },
     navBarListItem: {
+      color: 'black',
       display: 'flex',
       alignItems: 'center',
       cursor: 'pointer',
@@ -100,8 +109,9 @@ export const useStyles = makeStyles((theme: Theme) =>
       marginLeft: -10,
     },
     writeTweetBtn: {
+      marginTop: 4,
       display: 'flex',
-      alignItems: 'center',
+      alignItems: 'flex-start',
     },
     textAreaFooter: {
       display: 'flex',
@@ -146,7 +156,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       borderTop: 0,
       borderLeft: 0,
       borderRight: 0,
-      padding: '10px 15px',
+      padding: '20px 15px 10px 15px',
       display: 'flex',
       '&:hover': {
         backgroundColor: 'rgb(245, 248, 250)',
@@ -263,11 +273,43 @@ export const useStyles = makeStyles((theme: Theme) =>
       },
     },
     userInfo: {
-      position: 'relative',
-      bottom: '0',
+      padding: '5px 5px 10px 5px',
       display: 'flex',
       justifyContent: 'space-around',
       alignItems: 'center',
+      marginBottom: 50,
+      cursor: 'pointer',
+      borderRadius: 40,
+      '&:hover': {
+        backgroundColor: 'rgba(29, 161, 242, 0.1)',
+      },
+    },
+    listImg: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      marginRight: '20px',
+      marginTop: '10px',
+    },
+    listImgItem: {
+      marginBottom: 5,
+      width: 60,
+      height: 60,
+      marginLeft: 10,
+      borderRadius: 10,
+    },
+    removeImg: {
+      position: 'relative',
+      top: '-7px',
+      left: 46,
+      padding: 2,
+      backgroundColor: '#ff4b4b!important',
+      '& svg path': {
+        fill: '#fff',
+      },
+    },
+    userInfoDropDown: {
+      boxShadow: '1px 1px 10px rgba(0, 0, 0, 0.1) ',
+      border: '1px solid rgba(0,0,0, 0.1)',
     },
   }),
 );
@@ -317,7 +359,7 @@ export const Home: React.FC<PropsType> = (props) => {
                     key={tweet._id}
                     _id={tweet._id}
                     text={tweet.text}
-                    classes={classes}
+                    images={tweet.images}
                     user={tweet.user}
                     createdAt={tweet.createdAt}
                   />
@@ -330,6 +372,8 @@ export const Home: React.FC<PropsType> = (props) => {
             </Route>
 
             <Route exact path={`/home/tweet/:id`} component={FullTweet}></Route>
+
+            <Route path="/profile/:name" component={Profile} />
           </Paper>
         </Grid>
         {/* right side bar */}

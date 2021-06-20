@@ -16,7 +16,9 @@ import { store } from './redux/store';
 // 5. Сделать linkify для твита и <br/> при переходе на наовую строчку
 // 6. confermed_hash fix backend register
 // 7. поправить редирект после авторизации
-
+// 8. Фикс лоадеры на кнопке signin signup
+// 9. fix signout
+// 10. in profile create backBtn and count tweets from user, icons for info user
 ReactDOM.render(
   <Router>
     <ThemeProvider theme={theme}>

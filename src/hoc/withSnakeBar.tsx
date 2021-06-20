@@ -1,6 +1,6 @@
 import React from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
-import Alert, { AlertProps, Color } from '@material-ui/lab/Alert';
+import Alert, { Color } from '@material-ui/lab/Alert';
 
 type PropsType = {
   children: (callback: (text: string, type: Color) => void) => React.ReactElement;

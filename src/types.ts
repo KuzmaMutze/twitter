@@ -9,6 +9,7 @@ export enum LoadingState {
 export type Tweets = { 
     _id: string
     text: string
+    images: Array<string>
     user: {
         fullname: string
         username: string

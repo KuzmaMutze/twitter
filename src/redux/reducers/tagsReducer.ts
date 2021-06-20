@@ -33,7 +33,6 @@ export const actions = {
 
  
 export function* fetchTagsRequest() {
-    console.log("run tags");
     try {
         yield put(actions.setTweetsLoadingStateAC(LoadingState.LOADING))
         const data: Array<TagType> = yield call(tagsAPI.fetchTags)
@@ -44,8 +43,6 @@ export function* fetchTagsRequest() {
     }
 }
 export function* tagsSaga() {
-    console.log("tagsAC");
-    
     yield takeLatest("tags/FETCH_TAGS", fetchTagsRequest)
 }
 

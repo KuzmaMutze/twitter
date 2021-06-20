@@ -1,4 +1,4 @@
-import { Avatar, Button, Hidden, IconButton, Typography } from '@material-ui/core';
+import { Avatar, Button, Hidden, IconButton, Menu, MenuItem, Typography } from '@material-ui/core';
 import { Twitter } from '@material-ui/icons';
 import React, { useState } from 'react';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
@@ -11,22 +11,48 @@ import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import CreateIcon from '@material-ui/icons/Create';
 import Modal from '../SignIn/Modal';
 import { WriteTweetForm } from './WriteTweetForm';
-import { Link } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUserData } from '../../redux/selectors/auth-selector';
+import { actions } from '../../redux/reducers/authReducer';
 
 type PropsType = {
   classes: ReturnType<typeof useStyles>;
 };
 export const SideBar: React.FC<PropsType> = ({ classes }) => {
+  const dispatch = useDispatch();
+  const userData = useSelector(selectUserData);
+  const history = useHistory();
+
   const [visibleAddTweet, setVisibleAddTweet] = useState<boolean>(false);
   const onCloseAddTweet = () => {
     setVisibleAddTweet(!visibleAddTweet);
   };
-  // const onCloseAddTweet = () => {
-  //   setVisibleAddTweet(!visibleAddTweet);
-  // };
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleClickSignOut = () => {
+    handleClose();
+    dispatch(actions.signOutAC());
+  };
+
+  const handleClickProfile = () => {
+    handleClose();
+    history.push(`/profile/${userData?._id}`);
+  };
+
   return (
-    <>
+    <div className={classes.sideBarWrapper}>
       <ul className={classes.navBar}>
         <li>
           <Link to="/home">
@@ -90,7 +116,7 @@ export const SideBar: React.FC<PropsType> = ({ classes }) => {
             </Hidden>
           </div>
         </li>
-        <li className={classes.navBarListItem}>
+        <NavLink to={`/profile/${userData?._id}`} className={classes.navBarListItem}>
           <div>
             <PermIdentityIcon className={classes.navBarIconItem}></PermIdentityIcon>
 
@@ -100,7 +126,7 @@ export const SideBar: React.FC<PropsType> = ({ classes }) => {
               </Typography>
             </Hidden>
           </div>
-        </li>
+        </NavLink>
         <li className={classes.navBarListItem}>
           <Button
             onClick={onCloseAddTweet}
@@ -120,20 +146,38 @@ export const SideBar: React.FC<PropsType> = ({ classes }) => {
           </div>
         </li>
       </ul>
-      <div className={classes.userInfo}>
-        <Avatar
-          // className={classes.tweetAvatar}
-          alt="Ваш аватар"
-          src={`https://sun9-48.userapi.com/impg/3LXTx8zqXFNlg5Fz02tVhP1ykCYDPfF9ITj6sw/L2YxVSVONJY.jpg?size=1280x960&quality=96&sign=7634b299dd308712ff600a4bf2ad7271&type=album`}
-        />
-        <div>
-          <Typography variant="h6">Kuzma Mudze</Typography>
-          <div>@kzmmdz</div>
+      <Hidden mdDown>
+        <div className={classes.userInfo}>
+          <Avatar
+            // className={classes.tweetAvatar}
+            alt="Ваш аватар"
+            // src={userData?.img || "!23"}
+          />
+          {/* <Hidden mdDown> */}
+          <div>
+            <Typography variant="h6">{userData?.fullname}</Typography>
+            <div>{userData?.username}</div>
+          </div>
+
+          <div>
+            <IconButton onClick={handleClick}>
+              <KeyboardArrowDownIcon />
+            </IconButton>
+            <Menu
+              classes={{
+                paper: classes.userInfoDropDown,
+              }}
+              anchorEl={anchorEl}
+              keepMounted
+              open={open}
+              onClose={handleClose}>
+              <MenuItem onClick={handleClickProfile}>Мой профиль</MenuItem>
+              <MenuItem onClick={handleClickSignOut}>Выйти</MenuItem>
+            </Menu>
+          </div>
+          {/* </Hidden> */}
         </div>
-        <IconButton>
-          <KeyboardArrowDownIcon />
-        </IconButton>
-      </div>
-    </>
+      </Hidden>
+    </div>
   );
 };

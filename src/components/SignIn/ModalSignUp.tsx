@@ -15,6 +15,7 @@ import { Notification } from './../../hoc/withSnakeBar';
 import { selectLoadedUserAuth } from '../../redux/selectors/auth-selector';
 import { authAPI } from '../../api/api';
 import { actions } from '../../redux/reducers/authReducer';
+import { LoadingState } from '../../types';
 
 type PropsType = {
   open: boolean;
@@ -181,7 +182,11 @@ export const ModalSignUp: React.FC<PropsType> = ({ handleCloseModal, classes, op
                 <Button onClick={handleCloseModal} color="primary">
                   Отмена
                 </Button>
-                <Button disabled={isLoaded} type="submit" color="primary" variant="contained">
+                <Button
+                  disabled={isLoaded === LoadingState.LOADING}
+                  type="submit"
+                  color="primary"
+                  variant="contained">
                   Зарегестрироватся
                 </Button>
               </DialogActions>

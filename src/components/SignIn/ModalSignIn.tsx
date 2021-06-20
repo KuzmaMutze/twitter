@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../redux/reducers/authReducer';
 import { selectLoadedUserAuth } from '../../redux/selectors/auth-selector';
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
+import { LoadingState } from '../../types';
 
 type PropsType = {
   open: boolean;
@@ -52,7 +53,6 @@ export const ModalSignIn: React.FC<PropsType> = ({ handleCloseModal, classes, op
     try {
       const userData = await authAPI.auth(data);
       dispatch(actions.setFetchUserAC(userData));
-
       handleClick('Авторизация успешна!', 'success');
       handleCloseModal();
     } catch (error) {
@@ -111,8 +111,16 @@ export const ModalSignIn: React.FC<PropsType> = ({ handleCloseModal, classes, op
                 <Button onClick={handleCloseModal} color="primary">
                   Отмена
                 </Button>
-                <Button disabled={isLoaded} type="submit" color="primary" variant="contained">
-                  {!isLoaded ? 'Войти' : <CircularProgress style={{ width: 17, height: 17 }} />}
+                <Button
+                  disabled={isLoaded === LoadingState.LOADING}
+                  type="submit"
+                  color="primary"
+                  variant="contained">
+                  {!(isLoaded === LoadingState.LOADED) ? (
+                    'Войти'
+                  ) : (
+                    <CircularProgress style={{ width: 17, height: 17 }} />
+                  )}
                 </Button>
               </DialogActions>
             </FormControl>

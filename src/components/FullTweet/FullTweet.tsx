@@ -14,7 +14,6 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ReplyOutlinedIcon from '@material-ui/icons/ReplyOutlined';
 import ruLang from 'date-fns/locale/ru';
 
-import { formatDate } from '../../utils/formatDate';
 import { actions } from '../../redux/reducers/tweetReducer';
 import { useStyles } from '../../pages/Home';
 
@@ -60,6 +59,9 @@ export const FullTweet: React.FC<PropsType> = (props) => {
               </Typography>
             </div>
             <Typography className={classes.fullTweetText}>{tweet.text}</Typography>
+            {tweet.images.map((img) => (
+              <img style={{ width: '100%', height: '100%', margin: '15px 0 5px' }} src={img}></img>
+            ))}
             <Typography
               style={{ fontSize: 15, paddingTop: '15px' }}
               className={classes.tweetsUserName}>

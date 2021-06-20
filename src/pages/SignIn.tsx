@@ -1,12 +1,10 @@
-import { Button, DialogActions, makeStyles, Typography } from '@material-ui/core';
+import { Button, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import SearchIcon from '@material-ui/icons/Search';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 
-import { FormControl, FormGroup, TextField } from '@material-ui/core';
-import { ModalBlock } from '../components/SignIn/Modal';
 import { ModalSignIn } from '../components/SignIn/ModalSignIn';
 import { ModalSignUp } from '../components/SignIn/ModalSignUp';
 
@@ -98,7 +96,6 @@ export const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// type PropsType = {};
 export const SignIn: React.FC = (props) => {
   const classes = useStyles();
 

@@ -2,17 +2,23 @@ import { Paper, Avatar, TextareaAutosize, IconButton, Typography, Button } from 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
 import React, { useState } from 'react';
-import CropOriginalOutlinedIcon from '@material-ui/icons/CropOriginalOutlined';
 import SentimentSatisfiedOutlinedIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
 import { useStyles } from '../../pages/Home';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../redux/reducers/tweetsReducer';
 import { selectIsLoadedAddForm } from '../../redux/selectors/tweets-selector';
 import { LoadingState } from '../../types';
+import { UploadImages } from './UploadImages';
+import { uploadImgHelper } from '../../utils/uploadimg';
 
 type PropsType = {
   classes: ReturnType<typeof useStyles>;
   maxRows?: number;
+};
+
+export type ImgObj = {
+  blobUrl: string;
+  file: File;
 };
 
 export const WriteTweetForm: React.FC<PropsType> = ({ maxRows, classes }) => {
@@ -20,14 +26,26 @@ export const WriteTweetForm: React.FC<PropsType> = ({ maxRows, classes }) => {
 
   // text area
   let [text, setText] = useState<string>('');
+  const [images, setImages] = useState<Array<ImgObj>>([]);
   let textLimitPercent = Math.round((text.length / 280) * 100);
   let maxLenght = 280 - text.length;
+
   let onChangeTextArea = (e: React.FormEvent<HTMLTextAreaElement>) => {
     setText(e.currentTarget.value);
   };
-  let handleOnClickAddTweet = () => {
-    dispatch(actions.fetchAddTweetAC(text));
+
+  let handleOnClickAddTweet = async () => {
+    // uploadImage;
+    let urls = [];
+    dispatch(actions.setAddFormLoadingStateAC(LoadingState.LOADING));
+    for (let i = 0; i < images.length; i++) {
+      const file = images[i].file;
+      const { url } = await uploadImgHelper(file);
+      urls.push(url);
+    }
+    dispatch(actions.fetchAddTweetAC({ text, images: urls }));
     setText('');
+    setImages([]);
   };
 
   // result add tweet
@@ -54,11 +72,9 @@ export const WriteTweetForm: React.FC<PropsType> = ({ maxRows, classes }) => {
           <div className={classes.textAreaFooter}>
             <div className={classes.writeTweetIcons}>
               <IconButton>
-                <CropOriginalOutlinedIcon color="primary" />
-              </IconButton>
-              <IconButton>
                 <SentimentSatisfiedOutlinedIcon color="primary" />
               </IconButton>
+              <UploadImages images={images} onChangeImages={setImages} />
             </div>
             <div className={classes.writeTweetBtn}>
               {text && (
